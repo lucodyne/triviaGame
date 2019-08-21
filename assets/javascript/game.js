@@ -82,10 +82,14 @@ const restart = function() {
 
 restart();
 
-// clicking start button will display first question and start timer
+// clicking start button will clear button, display first question and start timer
 document.getElementById("startButton").onclick = function nextQuestion() {
   console.log("hello");
   const questions = document.getElementById("container");
+  questions.innerHTML = "";
+  questionTimer = setInterval(1000);
+  let timeLeft = 10;
+  function countDown() {}
 };
 // answering a question right or wrong displays result and starts short timer for next question
 //      OR

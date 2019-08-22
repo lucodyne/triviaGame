@@ -5,7 +5,7 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
-    appearance: false
+    appearance: true
   },
   question2: {
     prompt: "The answer is C",
@@ -13,7 +13,7 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
-    appearance: false
+    appearance: true
   },
   question3: {
     prompt: "The answer is D",
@@ -21,7 +21,7 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
-    appearance: false
+    appearance: true
   },
   question4: {
     prompt: "The answer is B",
@@ -29,7 +29,7 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
-    appearance: false
+    appearance: true
   },
   question5: {
     prompt: "The answer is C",
@@ -37,7 +37,7 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
-    appearance: false
+    appearance: true
   },
   question6: {
     prompt: "The answer is B",
@@ -45,7 +45,7 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
-    appearance: false
+    appearance: true
   },
   question7: {
     prompt: "The answer is D",
@@ -53,7 +53,7 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
-    appearance: false
+    appearance: true
   },
   question8: {
     prompt: "The answer is B",
@@ -61,23 +61,18 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
-    appearance: false
-  },
-
-  correct: 0
+    appearance: true
+  }
 };
+const score = 0;
 
 // start/reset function
 function restart() {
   for (let x in trivia) {
     trivia[x].appearance = false;
   }
-  const startButton = $("<div id=startButton>").text("START");
-  $("#quiz-content").append(startButton);
+  $("#quizContent").append("<div id=startButton>START</div>");
 }
-
-//runs once immediately
-restart();
 
 function timer10() {
   let timeLeft = 10;
@@ -97,10 +92,15 @@ function timer10() {
     }
   }
 }
-// clicking start button will clear button, display first question and start timer
-$(document).on("click", "#startButton", function() {
-  timer10();
-  // $("#quizContent").removeChild(startButton);
+$(document).ready(function() {
+  //runs restart once immediately
+  restart();
+  console.log("HELP");
+  // clicking start button will clear button, display first question and start timer
+  $(document).on("click", "#startButton", function() {
+    timer10();
+    // $("#quizContent").remove(startButton);
+  });
 });
 // answering a question right or wrong displays result and starts short timer for next question
 //      OR

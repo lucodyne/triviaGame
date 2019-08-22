@@ -76,8 +76,7 @@ function restart() {
 
 function timer10() {
   let timeLeft = 10;
-  // clear existing questions
-  // const questions = document.getElementById("quizContent");
+  // NOT DONE YET: clear existing questions
   questionTimer = setInterval(countDown, 1000);
   $("#timerDisplay").text(timeLeft);
   function countDown() {
@@ -86,20 +85,30 @@ function timer10() {
       timeLeft--;
       $("#timerDisplay").text(timeLeft);
     } else {
-      // document.getElementById("timerDisplay").textContent(timeLeft);
       $("#timerDisplay").text("TIME'S UP");
       clearInterval(questionTimer);
     }
   }
 }
+
+function shuffle() {
+  let RNG = "question1";
+  while (trivia[RNG].appearance == false) {
+    RNG = `question${Math.floor(Math.random() * 8)}`;
+    console.log(RNG);
+    trivia[RNG].appearance = true;
+    $("#quizContent").text(trivia[RNG].prompt);
+  }
+}
+
 $(document).ready(function() {
   //runs restart once immediately
   restart();
-  console.log("HELP");
   // clicking start button will clear button, display first question and start timer
   $(document).on("click", "#startButton", function() {
     timer10();
-    // $("#quizContent").remove(startButton);
+    shuffle();
+    $("#startButton").remove();
   });
 });
 // answering a question right or wrong displays result and starts short timer for next question

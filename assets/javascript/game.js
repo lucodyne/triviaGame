@@ -68,43 +68,40 @@ const trivia = {
 };
 
 // start/reset function
-const restart = function() {
+function restart() {
   for (let x in trivia) {
     trivia[x].appearance = false;
   }
-  const titleScreen = document.getElementById("quizContent");
-  const startButton = document.createElement("div");
-  titleScreen.innerHTML = "";
-  startButton.id = "startButton";
-  startButton.textContent = "START";
-  titleScreen.appendChild(startButton);
-};
+  const startButton = $("<div id=startButton>").text("START");
+  $("#quiz-content").append(startButton);
+}
 
+//runs once immediately
 restart();
-const timer10 = function() {
+
+function timer10() {
   let timeLeft = 10;
   // clear existing questions
   // const questions = document.getElementById("quizContent");
   questionTimer = setInterval(countDown, 1000);
-  const showClock = document.getElementById("timerDisplay");
-  showClock.textContent = timeLeft;
+  $("#timerDisplay").text(timeLeft);
   function countDown() {
     if (timeLeft > 1) {
       // timeLeft > 1 doesn't display 0
       timeLeft--;
-      showClock.textContent = timeLeft;
+      $("#timerDisplay").text(timeLeft);
     } else {
       // document.getElementById("timerDisplay").textContent(timeLeft);
-      showClock.textContent = "TIME'S UP";
+      $("#timerDisplay").text("TIME'S UP");
       clearInterval(questionTimer);
     }
   }
-};
+}
 // clicking start button will clear button, display first question and start timer
-document.getElementById("startButton").onclick = function nextQuestion() {
+$(document).on("click", "#startButton", function() {
   timer10();
-  document.getElementById("quizContent").removeChild(startButton);
-};
+  // $("#quizContent").removeChild(startButton);
+});
 // answering a question right or wrong displays result and starts short timer for next question
 //      OR
 // allowing timer to run out will count as wrong

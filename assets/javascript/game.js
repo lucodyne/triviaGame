@@ -74,8 +74,8 @@ function restart() {
   $("#quizContent").append("<div id=startButton>START</div>");
 }
 
-function timer10() {
-  let timeLeft = 10;
+function timer15() {
+  let timeLeft = 15;
   // NOT DONE YET: clear existing questions
   questionTimer = setInterval(countDown, 1000);
   $("#timerDisplay").text(timeLeft);
@@ -87,26 +87,41 @@ function timer10() {
     } else {
       $("#timerDisplay").text("TIME'S UP");
       clearInterval(questionTimer);
+      // NOT DONE YET: count question as wrong, wait 3 seconds, go next
+      goNext();
     }
   }
 }
-
+// NOTE: LOOPING FUNCTIONS NEEDS EXTERNAL COUNTER
+// SO WE DON'T BREAK AFTER LAST QUESTION
+function goNext() {
+  setTimeout(function() {
+    shuffle();
+    timer15();
+  }, 3000);
+}
 function shuffle() {
-  let RNG = "question1";
-  while (trivia[RNG].appearance == false) {
-    RNG = `question${Math.floor(Math.random() * 8)}`;
+  let RNG;
+  let shuffleState = false;
+  while (shuffleState == false) {
+    RNG = `question${Math.floor(Math.random() * 7 + 1)}`;
     console.log(RNG);
-    trivia[RNG].appearance = true;
-    $("#quizContent").text(trivia[RNG].prompt);
+    if (trivia[RNG].appearance == true) {
+    } else {
+      trivia[RNG].appearance = true;
+      $("#quizContent").text(trivia[RNG].prompt);
+      shuffleState = true;
+    }
+    //NOT DONE YET: display answers(with listeners by id)
   }
 }
 
 $(document).ready(function() {
   //runs restart once immediately
   restart();
-  // clicking start button will clear button, display first question and start timer
+  // clicking start button will clear button, display a question and start timer
   $(document).on("click", "#startButton", function() {
-    timer10();
+    timer15();
     shuffle();
     $("#startButton").remove();
   });

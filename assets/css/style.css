@@ -11,6 +11,9 @@ body {
 .titleCard {
   text-align: center;
 }
+#timerDisplay {
+  text-align: center;
+}
 #startButton {
   /* position: fixed;
   left: 45%;

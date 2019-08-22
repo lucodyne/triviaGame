@@ -72,7 +72,7 @@ const restart = function() {
   for (let x in trivia) {
     trivia[x].appearance = false;
   }
-  const titleScreen = document.getElementById("container");
+  const titleScreen = document.getElementById("quizContent");
   const startButton = document.createElement("div");
   titleScreen.innerHTML = "";
   startButton.id = "startButton";
@@ -81,15 +81,29 @@ const restart = function() {
 };
 
 restart();
-
+const timer10 = function() {
+  let timeLeft = 10;
+  // clear existing questions
+  // const questions = document.getElementById("quizContent");
+  questionTimer = setInterval(countDown, 1000);
+  const showClock = document.getElementById("timerDisplay");
+  showClock.textContent = timeLeft;
+  function countDown() {
+    if (timeLeft > 1) {
+      // timeLeft > 1 doesn't display 0
+      timeLeft--;
+      showClock.textContent = timeLeft;
+    } else {
+      // document.getElementById("timerDisplay").textContent(timeLeft);
+      showClock.textContent = "TIME'S UP";
+      clearInterval(questionTimer);
+    }
+  }
+};
 // clicking start button will clear button, display first question and start timer
 document.getElementById("startButton").onclick = function nextQuestion() {
-  console.log("hello");
-  const questions = document.getElementById("container");
-  questions.innerHTML = "";
-  questionTimer = setInterval(1000);
-  let timeLeft = 10;
-  function countDown() {}
+  timer10();
+  document.getElementById("quizContent").removeChild(startButton);
 };
 // answering a question right or wrong displays result and starts short timer for next question
 //      OR

@@ -1,109 +1,109 @@
 const trivia = {
   question1: {
     prompt: "This is question1",
-    answerA: "A",
-    answerB: "B",
-    answerC: "C",
-    answerD: "D",
+    answerA: "A1",
+    answerB: "B1",
+    answerC: "C1",
+    answerD: "D1",
     solution: "answerA",
     appearance: true
   },
   question2: {
     prompt: "This is question2",
-    answerA: "A",
-    answerB: "B",
-    answerC: "C",
-    answerD: "D",
+    answerA: "A2",
+    answerB: "B2",
+    answerC: "C2",
+    answerD: "D2",
     solution: "answerB",
     appearance: true
   },
   question3: {
     prompt: "This is question3",
-    answerA: "A",
-    answerB: "B",
-    answerC: "C",
-    answerD: "D",
+    answerA: "A3",
+    answerB: "B3",
+    answerC: "C3",
+    answerD: "D3",
     solution: "answerC",
     appearance: true
   },
   question4: {
     prompt: "This is question4",
-    answerA: "A",
-    answerB: "B",
-    answerC: "C",
-    answerD: "D",
+    answerA: "A4",
+    answerB: "B4",
+    answerC: "C4",
+    answerD: "D4",
     solution: "answerD",
     appearance: true
   },
   question5: {
     prompt: "This is question5",
-    answerA: "A",
-    answerB: "B",
-    answerC: "C",
-    answerD: "D",
+    answerA: "A5",
+    answerB: "B5",
+    answerC: "C5",
+    answerD: "D5",
     solution: "answerA",
     appearance: true
   },
   question6: {
     prompt: "This is question6",
-    answerA: "A",
-    answerB: "B",
-    answerC: "C",
-    answerD: "D",
+    answerA: "A6",
+    answerB: "B6",
+    answerC: "C6",
+    answerD: "D6",
     solution: "answerB",
     appearance: true
   },
   question7: {
     prompt: "This is question7",
-    answerA: "A",
-    answerB: "B",
-    answerC: "C",
-    answerD: "D",
+    answerA: "A7",
+    answerB: "B7",
+    answerC: "C7",
+    answerD: "D7",
     solution: "answerC",
     appearance: true
   },
   question8: {
     prompt: "This is question8",
-    answerA: "A",
-    answerB: "B",
-    answerC: "C",
-    answerD: "D",
+    answerA: "A8",
+    answerB: "B8",
+    answerC: "C8",
+    answerD: "D8",
     solution: "answerD",
     appearance: true
   },
   question9: {
     prompt: "This is question9",
-    answerA: "A",
-    answerB: "B",
-    answerC: "C",
-    answerD: "D",
+    answerA: "A9",
+    answerB: "B9",
+    answerC: "C9",
+    answerD: "D9",
     solution: "answerA",
     appearance: true
   },
   question10: {
     prompt: "This is question10",
-    answerA: "A",
-    answerB: "B",
-    answerC: "C",
-    answerD: "D",
+    answerA: "A10",
+    answerB: "B10",
+    answerC: "C10",
+    answerD: "D10",
     solution: "answerB",
     appearance: true
   },
   question11: {
     prompt: "This is question11",
-    answerA: "A",
-    answerB: "B",
-    answerC: "C",
-    answerD: "D",
+    answerA: "A11",
+    answerB: "B11",
+    answerC: "C11",
+    answerD: "D11",
     solution: "answerC",
     appearance: true
   },
   question12: {
-    prompt: "This is question11",
-    answerA: "A",
-    answerB: "B",
-    answerC: "C",
-    answerD: "D",
+    prompt: "This is question12",
+    answerA: "A12",
+    answerB: "B12",
+    answerC: "C12",
+    answerD: "D12",
     solution: "answerD",
     appearance: true
   }
@@ -111,6 +111,7 @@ const trivia = {
 let score = 0;
 let questionCount = 0;
 let inputLimit = false;
+let RNG;
 
 // start/reset function
 function restart() {
@@ -134,12 +135,11 @@ function timer15() {
     } else {
       $("#timerDisplay").text("TIME'S UP");
       clearInterval(questionTimer);
-      // NOT DONE YET: count question as wrong, wait 3 seconds, go next
       goNext();
     }
   }
 }
-// waits 3 seconds, selects next question and calls timer
+// waits 3 seconds, selects next question and calls timer15
 function goNext() {
   if (questionCount < 8) {
     inputLimit = true;
@@ -148,22 +148,24 @@ function goNext() {
       timer15();
       inputLimit = false;
     }, 3000);
+  } else {
+    // THIS IS THE END SCREEN
   }
 }
+
+// shuffle chooses a random question that hasn't appeared yet
 function shuffle() {
-  let RNG;
   let shuffleState = false;
   while (shuffleState == false) {
     RNG = `question${Math.floor(Math.random() * 12 + 1)}`;
-    console.log(RNG);
     if (trivia[RNG].appearance == true) {
     } else {
       trivia[RNG].appearance = true;
       questionCount++;
+      // html not ideal, should insert divs with jquery
       $("#quizContent").html(
         `<div class=qPrompt>Question #${questionCount}: ${trivia[RNG].prompt}</div>`
       );
-      console.log("questionCount: " + questionCount);
       shuffleState = true;
       $("#quizContent").append(
         `<div class=qChoice id=answerA>${trivia[RNG].answerA}</div>`
@@ -195,7 +197,13 @@ $(document).ready(function() {
   $(document).on("click", ".qChoice", function() {
     if (inputLimit == false) {
       clearInterval(questionTimer);
-      $("#timerDisplay").text(`user entered: ${event.target.id}`);
+      // correct/incorrect logic here:
+      if (trivia[RNG].solution == event.target.id) {
+        score++;
+        $("#timerDisplay").text("CORRECT!");
+      } else {
+        $("#timerDisplay").text("WRONG!");
+      }
       goNext();
     }
   });

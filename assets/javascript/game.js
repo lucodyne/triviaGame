@@ -72,39 +72,40 @@ const trivia = {
     appearance: true
   },
   question9: {
-    prompt: "This is question9",
-    answerA: "A9",
-    answerB: "B9",
-    answerC: "C9",
-    answerD: "D9",
-    solution: "answerA",
+    prompt:
+      "How many champion abilities have the potential to stack infinitely?",
+    answerA: "5",
+    answerB: "6",
+    answerC: "7",
+    answerD: "8",
+    solution: "answerD",
     appearance: true
   },
   question10: {
-    prompt: "This is question10",
-    answerA: "A10",
-    answerB: "B10",
-    answerC: "C10",
-    answerD: "D10",
+    prompt: "How many reworks has Ryze undergone since release?",
+    answerA: "4",
+    answerB: "5",
+    answerC: "6",
+    answerD: "7",
     solution: "answerB",
     appearance: true
   },
   question11: {
-    prompt: "This is question11",
-    answerA: "A11",
-    answerB: "B11",
-    answerC: "C11",
-    answerD: "D11",
-    solution: "answerC",
+    prompt: `Which champion used to have a passive that shared a name with Nocturne's ultimate ability, "Paranoia"?`,
+    answerA: "Fiddlesticks",
+    answerB: "Gangplank",
+    answerC: "Evelynn",
+    answerD: "Twisted Fate",
+    solution: "answerA",
     appearance: true
   },
   question12: {
-    prompt: "This is question12",
-    answerA: "A12",
-    answerB: "B12",
-    answerC: "C12",
-    answerD: "D12",
-    solution: "answerD",
+    prompt: `Which champion has the lowest base AD in the game?`,
+    answerA: "Sona",
+    answerB: "Karthus",
+    answerC: "Orianna",
+    answerD: "Lulu",
+    solution: "answerC",
     appearance: true
   }
 };

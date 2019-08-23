@@ -77,7 +77,7 @@ function restart() {
 
 function timer15() {
   // let timeLeft = 15;
-  let timeLeft = 3; // for testing only
+  let timeLeft = 3; // FOR TESTING ONLY
   // NOT DONE YET: clear existing questions
   questionTimer = setInterval(countDown, 1000);
   $("#timerDisplay").text(timeLeft);
@@ -96,15 +96,17 @@ function timer15() {
 }
 // waits 3 seconds, selects next question and calls timer
 function goNext() {
-  setTimeout(function() {
-    shuffle();
-    timer15();
-  }, 3000);
+  if (questionCount < 8) {
+    setTimeout(function() {
+      shuffle();
+      timer15();
+    }, 3000);
+  }
 }
 function shuffle() {
   let RNG;
   let shuffleState = false;
-  while (shuffleState == false && questionCount < 7) {
+  while (shuffleState == false) {
     RNG = `question${Math.floor(Math.random() * 8 + 1)}`;
     console.log(RNG);
     if (trivia[RNG].appearance == true) {

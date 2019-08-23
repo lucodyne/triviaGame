@@ -1,6 +1,6 @@
 const trivia = {
   question1: {
-    prompt: "The answer is A",
+    prompt: "This is question1",
     answerA: "A",
     answerB: "B",
     answerC: "C",
@@ -8,7 +8,7 @@ const trivia = {
     appearance: true
   },
   question2: {
-    prompt: "The answer is C",
+    prompt: "This is question2",
     answerA: "A",
     answerB: "B",
     answerC: "C",
@@ -16,7 +16,7 @@ const trivia = {
     appearance: true
   },
   question3: {
-    prompt: "The answer is D",
+    prompt: "This is question3",
     answerA: "A",
     answerB: "B",
     answerC: "C",
@@ -24,7 +24,7 @@ const trivia = {
     appearance: true
   },
   question4: {
-    prompt: "The answer is B",
+    prompt: "This is question4",
     answerA: "A",
     answerB: "B",
     answerC: "C",
@@ -32,7 +32,7 @@ const trivia = {
     appearance: true
   },
   question5: {
-    prompt: "The answer is C",
+    prompt: "This is question5",
     answerA: "A",
     answerB: "B",
     answerC: "C",
@@ -40,7 +40,7 @@ const trivia = {
     appearance: true
   },
   question6: {
-    prompt: "The answer is B",
+    prompt: "This is question6",
     answerA: "A",
     answerB: "B",
     answerC: "C",
@@ -48,7 +48,7 @@ const trivia = {
     appearance: true
   },
   question7: {
-    prompt: "The answer is D",
+    prompt: "This is question7",
     answerA: "A",
     answerB: "B",
     answerC: "C",
@@ -56,7 +56,7 @@ const trivia = {
     appearance: true
   },
   question8: {
-    prompt: "The answer is B",
+    prompt: "This is question8",
     answerA: "A",
     answerB: "B",
     answerC: "C",
@@ -64,7 +64,8 @@ const trivia = {
     appearance: true
   }
 };
-const score = 0;
+let score = 0;
+let questionCount = 0;
 
 // start/reset function
 function restart() {
@@ -75,7 +76,8 @@ function restart() {
 }
 
 function timer15() {
-  let timeLeft = 15;
+  // let timeLeft = 15;
+  let timeLeft = 3; // for testing only
   // NOT DONE YET: clear existing questions
   questionTimer = setInterval(countDown, 1000);
   $("#timerDisplay").text(timeLeft);
@@ -92,8 +94,7 @@ function timer15() {
     }
   }
 }
-// NOTE: LOOPING FUNCTIONS NEEDS EXTERNAL COUNTER
-// SO WE DON'T BREAK AFTER LAST QUESTION
+// waits 3 seconds, selects next question and calls timer
 function goNext() {
   setTimeout(function() {
     shuffle();
@@ -103,13 +104,15 @@ function goNext() {
 function shuffle() {
   let RNG;
   let shuffleState = false;
-  while (shuffleState == false) {
-    RNG = `question${Math.floor(Math.random() * 7 + 1)}`;
+  while (shuffleState == false && questionCount < 7) {
+    RNG = `question${Math.floor(Math.random() * 8 + 1)}`;
     console.log(RNG);
     if (trivia[RNG].appearance == true) {
     } else {
       trivia[RNG].appearance = true;
       $("#quizContent").text(trivia[RNG].prompt);
+      questionCount++;
+      console.log("questionCount: " + questionCount);
       shuffleState = true;
     }
     //NOT DONE YET: display answers(with listeners by id)

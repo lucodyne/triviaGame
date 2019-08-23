@@ -26,3 +26,12 @@ body {
   cursor: pointer;
   /* cursor: url(../images/cursor/lolhover.png), auto; */
 }
+
+#quizContent {
+  text-align: center;
+  font-size: 300%;
+}
+.qChoice:hover {
+  background: white;
+  cursor: pointer;
+}

@@ -5,6 +5,7 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
+    solution: "answerA",
     appearance: true
   },
   question2: {
@@ -13,6 +14,7 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
+    solution: "answerB",
     appearance: true
   },
   question3: {
@@ -21,6 +23,7 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
+    solution: "answerC",
     appearance: true
   },
   question4: {
@@ -29,6 +32,7 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
+    solution: "answerD",
     appearance: true
   },
   question5: {
@@ -37,6 +41,7 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
+    solution: "answerA",
     appearance: true
   },
   question6: {
@@ -45,6 +50,7 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
+    solution: "answerB",
     appearance: true
   },
   question7: {
@@ -53,6 +59,7 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
+    solution: "answerC",
     appearance: true
   },
   question8: {
@@ -61,11 +68,49 @@ const trivia = {
     answerB: "B",
     answerC: "C",
     answerD: "D",
+    solution: "answerD",
+    appearance: true
+  },
+  question9: {
+    prompt: "This is question9",
+    answerA: "A",
+    answerB: "B",
+    answerC: "C",
+    answerD: "D",
+    solution: "answerA",
+    appearance: true
+  },
+  question10: {
+    prompt: "This is question10",
+    answerA: "A",
+    answerB: "B",
+    answerC: "C",
+    answerD: "D",
+    solution: "answerB",
+    appearance: true
+  },
+  question11: {
+    prompt: "This is question11",
+    answerA: "A",
+    answerB: "B",
+    answerC: "C",
+    answerD: "D",
+    solution: "answerC",
+    appearance: true
+  },
+  question12: {
+    prompt: "This is question11",
+    answerA: "A",
+    answerB: "B",
+    answerC: "C",
+    answerD: "D",
+    solution: "answerD",
     appearance: true
   }
 };
 let score = 0;
 let questionCount = 0;
+let inputLimit = false;
 
 // start/reset function
 function restart() {
@@ -97,9 +142,11 @@ function timer15() {
 // waits 3 seconds, selects next question and calls timer
 function goNext() {
   if (questionCount < 8) {
+    inputLimit = true;
     setTimeout(function() {
       shuffle();
       timer15();
+      inputLimit = false;
     }, 3000);
   }
 }
@@ -107,17 +154,30 @@ function shuffle() {
   let RNG;
   let shuffleState = false;
   while (shuffleState == false) {
-    RNG = `question${Math.floor(Math.random() * 8 + 1)}`;
+    RNG = `question${Math.floor(Math.random() * 12 + 1)}`;
     console.log(RNG);
     if (trivia[RNG].appearance == true) {
     } else {
       trivia[RNG].appearance = true;
-      $("#quizContent").text(trivia[RNG].prompt);
       questionCount++;
+      $("#quizContent").html(
+        `<div class=qPrompt>Question #${questionCount}: ${trivia[RNG].prompt}</div>`
+      );
       console.log("questionCount: " + questionCount);
       shuffleState = true;
+      $("#quizContent").append(
+        `<div class=qChoice id=answerA>${trivia[RNG].answerA}</div>`
+      );
+      $("#quizContent").append(
+        `<div class=qChoice id=answerB>${trivia[RNG].answerB}</div>`
+      );
+      $("#quizContent").append(
+        `<div class=qChoice id=answerC>${trivia[RNG].answerC}</div>`
+      );
+      $("#quizContent").append(
+        `<div class=qChoice id=answerD>${trivia[RNG].answerD}</div>`
+      );
     }
-    //NOT DONE YET: display answers(with listeners by id)
   }
 }
 
@@ -130,9 +190,18 @@ $(document).ready(function() {
     shuffle();
     $("#startButton").remove();
   });
+
+  //listener for user answer choice
+  $(document).on("click", ".qChoice", function() {
+    if (inputLimit == false) {
+      clearInterval(questionTimer);
+      $("#timerDisplay").text(`user entered: ${event.target.id}`);
+      goNext();
+    }
+  });
 });
 // answering a question right or wrong displays result and starts short timer for next question
 //      OR
-// allowing timer to run out will count as wrong
+// allowing timer to run out will go to next question without score++
 //
-// at end, display score and reset values, show title again
+// at end, display score, show a restart button again

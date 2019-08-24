@@ -1,61 +1,64 @@
 const trivia = {
   question1: {
-    prompt: "This is question1",
-    answerA: "A1",
-    answerB: "B1",
-    answerC: "C1",
-    answerD: "D1",
-    solution: "answerA",
+    prompt:
+      "Aside from wards, __ can create a structure that can be Teleported to.",
+    answerA: "12",
+    answerB: "14",
+    answerC: "15",
+    answerD: "18",
+    solution: "answerC",
     appearance: true
   },
   question2: {
-    prompt: "This is question2",
-    answerA: "A2",
-    answerB: "B2",
-    answerC: "C2",
-    answerD: "D2",
+    prompt:
+      "_____'s basic attacks apply up to 100 stacks of a debuff that lowers armor and magic resistance.",
+    answerA: "Elder Dragon",
+    answerB: "Baron Nashor",
+    answerC: "Rammus",
+    answerD: "Teemo",
     solution: "answerB",
     appearance: true
   },
   question3: {
-    prompt: "This is question3",
-    answerA: "A3",
-    answerB: "B3",
-    answerC: "C3",
-    answerD: "D3",
+    prompt: "Elder Dragon will only spawn after __ minutes.",
+    answerA: "20",
+    answerB: "30",
+    answerC: "35",
+    answerD: "40",
     solution: "answerC",
     appearance: true
   },
   question4: {
-    prompt: "This is question4",
-    answerA: "A4",
-    answerB: "B4",
-    answerC: "C4",
-    answerD: "D4",
-    solution: "answerD",
+    prompt:
+      "For the first 15 minutes in-game, Siege minions spawn every _ waves.",
+    answerA: "2",
+    answerB: "3",
+    answerC: "4",
+    answerD: "5",
+    solution: "answerB",
     appearance: true
   },
   question5: {
-    prompt: "This is question5",
-    answerA: "A5",
-    answerB: "B5",
-    answerC: "C5",
-    answerD: "D5",
-    solution: "answerA",
+    prompt: `There are __ "PROJECT" skins.`,
+    answerA: "12",
+    answerB: "13",
+    answerC: "15",
+    answerD: "17",
+    solution: "answerD",
     appearance: true
   },
   question6: {
-    prompt: "_____ has the lowest base HP in the game",
-    answerA: "Yuumi",
+    prompt: "_____ has the lowest base HP of all champions.",
+    answerA: "Kled",
     answerB: "Anivia",
-    answerC: "Gnar",
-    answerD: "Kled",
-    solution: "answerB",
+    answerC: "Yuumi",
+    answerD: "Gnar",
+    solution: "answerA",
     appearance: true
   },
   question7: {
     prompt:
-      "_____'s passive ability causes basic attacks to apply a debuff that converts 10% of magic damage received to true damage",
+      "_____'s passive ability causes basic attacks to apply a debuff that converts 10% of magic damage received to true damage.",
     answerA: "Amumu",
     answerB: "Corki",
     answerC: "Alistar",
@@ -91,7 +94,7 @@ const trivia = {
     appearance: true
   },
   question11: {
-    prompt: `_____ used to have a passive that shared a name with Nocturne's ultimate ability, "Paranoia"`,
+    prompt: `_____ used to have a passive that shared a name with Nocturne's ultimate ability, "Paranoia."`,
     answerA: "Fiddlesticks",
     answerB: "Gangplank",
     answerC: "Evelynn",
@@ -100,12 +103,12 @@ const trivia = {
     appearance: true
   },
   question12: {
-    prompt: `_____ has the lowest base AD in the game.`,
+    prompt: `_____ has the lowest base AD of all champions.`,
     answerA: "Sona",
     answerB: "Karthus",
-    answerC: "Orianna",
-    answerD: "Lulu",
-    solution: "answerC",
+    answerC: "Lulu",
+    answerD: "Orianna",
+    solution: "answerD",
     appearance: true
   }
 };
@@ -113,7 +116,9 @@ let score = 0;
 let questionCount = 0;
 let inputLimit = false;
 let RNG;
-const 
+
+const soundGood = new Audio("./assets/sound/Good.mp3");
+const soundBad = new Audio("./assets/sound/Bad.mp3");
 
 // start/reset function
 function restart() {
@@ -128,8 +133,8 @@ function restart() {
 }
 
 function timer15() {
-  // let timeLeft = 15;
-  let timeLeft = 3; // FOR TESTING ONLY
+  let timeLeft = 15;
+  // let timeLeft = 3; // FOR TESTING ONLY
   // NOT DONE YET: clear existing questions
   questionTimer = setInterval(countDown, 1000);
   $("#timerDisplay").text(timeLeft);
@@ -140,6 +145,9 @@ function timer15() {
       $("#timerDisplay").text(timeLeft);
     } else {
       $("#timerDisplay").text("TIME'S UP");
+      let falseAnswer = trivia[RNG].solution;
+      $(`#${falseAnswer}`).addClass("trueAnswer");
+      soundBad.play();
       clearInterval(questionTimer);
       goNext();
     }
@@ -179,7 +187,7 @@ function shuffle() {
       questionCount++;
       // html not ideal, should insert divs with jquery
       $("#quizContent").html(
-        `<div class=qPrompt>Question #${questionCount}: ${trivia[RNG].prompt}</div>`
+        `<div class=qPrompt>Question ${questionCount}/8: ${trivia[RNG].prompt}</div>`
       );
       shuffleState = true;
       $("#quizContent").append(
@@ -215,11 +223,13 @@ $(document).ready(function() {
       clearInterval(questionTimer);
       // correct/incorrect logic here:
       if (trivia[RNG].solution == event.target.id) {
+        soundGood.play();
         score++;
         $("#timerDisplay").text("CORRECT!");
         $(`#${event.target.id}`).addClass("trueAnswer");
         //play sound
       } else {
+        soundBad.play();
         $("#timerDisplay").text("WRONG!");
         $(`#${event.target.id}`).addClass("falseAnswer");
         let falseAnswer = trivia[RNG].solution;

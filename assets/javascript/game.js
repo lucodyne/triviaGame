@@ -1,10 +1,10 @@
 const trivia = {
   question1: {
     prompt:
-      "Aside from wards, __ can create a structure that can be Teleported to.",
-    answerA: "12",
+      "Excluding wards, __ champions can create an object that can be Teleported to.",
+    answerA: "13",
     answerB: "14",
-    answerC: "15",
+    answerC: "16",
     answerD: "18",
     solution: "answerC",
     appearance: true
@@ -21,16 +21,16 @@ const trivia = {
   },
   question3: {
     prompt: "Elder Dragon will only spawn after __ minutes.",
-    answerA: "20",
-    answerB: "30",
+    answerA: "15",
+    answerB: "25",
     answerC: "35",
-    answerD: "40",
+    answerD: "45",
     solution: "answerC",
     appearance: true
   },
   question4: {
     prompt:
-      "For the first 15 minutes in-game, Siege minions spawn every _ waves.",
+      "For the first 15 minutes in-game, siege minions will spawn every __ waves.",
     answerA: "2",
     answerB: "3",
     answerC: "4",
@@ -39,7 +39,7 @@ const trivia = {
     appearance: true
   },
   question5: {
-    prompt: `There are __ "PROJECT" skins.`,
+    prompt: `How many "PROJECT" skins are there?`,
     answerA: "12",
     answerB: "13",
     answerC: "15",
@@ -108,6 +108,51 @@ const trivia = {
     answerB: "Karthus",
     answerC: "Lulu",
     answerD: "Orianna",
+    solution: "answerD",
+    appearance: true
+  },
+  question13: {
+    prompt: `Olaf's passive ability grants him _____ based on his missing health.`,
+    answerA: "Attack Damage",
+    answerB: "Attack Speed",
+    answerC: "Critical Strike Chance",
+    answerD: "Life Steal",
+    solution: "answerB",
+    appearance: true
+  },
+  question14: {
+    prompt: `How many champions have no abilities that scale with ability power?`,
+    answerA: "17",
+    answerB: "19",
+    answerC: "20",
+    answerD: "21",
+    solution: "answerA",
+    appearance: true
+  },
+  question15: {
+    prompt: `Destroyed inhibitors respawn after __ minutes.`,
+    answerA: "3",
+    answerB: "5",
+    answerC: "7",
+    answerD: "8",
+    solution: "answerB",
+    appearance: true
+  },
+  question16: {
+    prompt: `Flash has a cooldown timer of __ minutes.`,
+    answerA: "3",
+    answerB: "5",
+    answerC: "6",
+    answerD: "8",
+    solution: "answerB",
+    appearance: true
+  },
+  question17: {
+    prompt: `Which champion summons the pet with the highest BASE health?`,
+    answerA: "Annie",
+    answerB: "Ivern",
+    answerC: "Malzahar",
+    answerD: "Yorick",
     solution: "answerD",
     appearance: true
   }
@@ -180,7 +225,7 @@ function goNext() {
 function shuffle() {
   let shuffleState = false;
   while (shuffleState == false) {
-    RNG = `question${Math.floor(Math.random() * 12 + 1)}`;
+    RNG = `question${Math.floor(Math.random() * 17 + 1)}`;
     if (trivia[RNG].appearance == true) {
     } else {
       trivia[RNG].appearance = true;

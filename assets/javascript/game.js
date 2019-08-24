@@ -45,35 +45,26 @@ const trivia = {
     appearance: true
   },
   question6: {
-    prompt: "This is question6",
-    answerA: "A6",
-    answerB: "B6",
-    answerC: "C6",
-    answerD: "D6",
+    prompt: "_____ has the lowest base HP in the game",
+    answerA: "Yuumi",
+    answerB: "Anivia",
+    answerC: "Gnar",
+    answerD: "Kled",
     solution: "answerB",
     appearance: true
   },
   question7: {
-    prompt: "This is question7",
-    answerA: "A7",
-    answerB: "B7",
-    answerC: "C7",
-    answerD: "D7",
-    solution: "answerC",
+    prompt:
+      "_____'s passive ability causes basic attacks to apply a debuff that converts 10% of magic damage received to true damage",
+    answerA: "Amumu",
+    answerB: "Corki",
+    answerC: "Alistar",
+    answerD: "Rumble",
+    solution: "answerA",
     appearance: true
   },
   question8: {
-    prompt: "This is question8",
-    answerA: "A8",
-    answerB: "B8",
-    answerC: "C8",
-    answerD: "D8",
-    solution: "answerD",
-    appearance: true
-  },
-  question9: {
-    prompt:
-      "How many champion abilities have the potential to stack infinitely?",
+    prompt: "How many champions have abilities that can stack infinitely?",
     answerA: "5",
     answerB: "6",
     answerC: "7",
@@ -81,8 +72,17 @@ const trivia = {
     solution: "answerD",
     appearance: true
   },
+  question9: {
+    prompt: "At what level does Tristana's auto attack range exceed Caitlyn's?",
+    answerA: "15",
+    answerB: "16",
+    answerC: "17",
+    answerD: "18",
+    solution: "answerC",
+    appearance: true
+  },
   question10: {
-    prompt: "How many reworks has Ryze undergone since release?",
+    prompt: "Since release, Ryze has undergone __ reworks.",
     answerA: "4",
     answerB: "5",
     answerC: "6",
@@ -91,7 +91,7 @@ const trivia = {
     appearance: true
   },
   question11: {
-    prompt: `Which champion used to have a passive that shared a name with Nocturne's ultimate ability, "Paranoia"?`,
+    prompt: `_____ used to have a passive that shared a name with Nocturne's ultimate ability, "Paranoia"`,
     answerA: "Fiddlesticks",
     answerB: "Gangplank",
     answerC: "Evelynn",
@@ -100,7 +100,7 @@ const trivia = {
     appearance: true
   },
   question12: {
-    prompt: `Which champion has the lowest base AD in the game?`,
+    prompt: `_____ has the lowest base AD in the game.`,
     answerA: "Sona",
     answerB: "Karthus",
     answerC: "Orianna",
@@ -113,9 +113,14 @@ let score = 0;
 let questionCount = 0;
 let inputLimit = false;
 let RNG;
+const 
 
 // start/reset function
 function restart() {
+  inputLimit = false;
+  $("#timerDisplay , #quizContent").empty();
+  score = 0;
+  questionCount = 0;
   for (let x in trivia) {
     trivia[x].appearance = false;
   }
@@ -142,15 +147,24 @@ function timer15() {
 }
 // waits 3 seconds, selects next question and calls timer15
 function goNext() {
+  inputLimit = true;
   if (questionCount < 8) {
-    inputLimit = true;
     setTimeout(function() {
       shuffle();
       timer15();
       inputLimit = false;
     }, 3000);
   } else {
-    // THIS IS THE END SCREEN
+    setTimeout(function() {
+      // THIS IS THE END SCREEN
+      $("#timerDisplay").empty();
+      $("#quizContent").html(
+        `<div class=scoreCard>Score: ${(score * 100) / 8}% (${score}/8)</div>`
+      );
+    }, 3000);
+    setTimeout(function() {
+      $("#quizContent").append(`<div id=toTitle>Play Again?</div>`);
+    }, 5000);
   }
 }
 
@@ -197,20 +211,28 @@ $(document).ready(function() {
   //listener for user answer choice
   $(document).on("click", ".qChoice", function() {
     if (inputLimit == false) {
+      inputLimit = true;
       clearInterval(questionTimer);
       // correct/incorrect logic here:
       if (trivia[RNG].solution == event.target.id) {
         score++;
         $("#timerDisplay").text("CORRECT!");
+        $(`#${event.target.id}`).addClass("trueAnswer");
+        //play sound
       } else {
         $("#timerDisplay").text("WRONG!");
+        $(`#${event.target.id}`).addClass("falseAnswer");
+        let falseAnswer = trivia[RNG].solution;
+        $(`#${falseAnswer}`).addClass("trueAnswer");
+        //also, play sound
       }
       goNext();
     }
   });
+
+  $(document).on("click", "#toTitle", function() {
+    restart();
+  });
 });
-// answering a question right or wrong displays result and starts short timer for next question
-//      OR
-// allowing timer to run out will go to next question without score++
-//
-// at end, display score, show a restart button again
+
+// first question doesn't receive input for some reason

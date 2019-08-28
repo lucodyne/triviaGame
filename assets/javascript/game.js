@@ -153,7 +153,7 @@ const trivia = {
     answerB: "Ivern",
     answerC: "Malzahar",
     answerD: "Yorick",
-    solution: "answerD",
+    solution: "answerB",
     appearance: true
   }
 };

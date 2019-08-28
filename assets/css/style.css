@@ -6,7 +6,7 @@ body {
   height: 100vh;
   overflow: hidden;
   color: white;
-  cursor: url(../images/cursor/loldefault.png), auto;
+  /* cursor: url(../images/cursor/loldefault.png), auto; */
 }
 #zed {
   position: fixed;
@@ -36,9 +36,9 @@ body {
   font-size: 4rem;
 }
 #startButton:hover {
-  /* cursor: pointer; */
+  cursor: pointer;
   font-size: 4.3rem;
-  cursor: url(../images/cursor/lolhover.png), auto;
+  /* cursor: url(../images/cursor/lolhover.png), auto; */
 }
 
 #toTitle {
@@ -48,8 +48,8 @@ body {
   font-size: 4rem;
 }
 #toTitle:hover {
-  /* cursor: pointer; */
-  cursor: url(../images/cursor/lolhover.png), auto;
+  cursor: pointer;
+  /* cursor: url(../images/cursor/lolhover.png), auto; */
   font-size: 4.3rem;
 }
 
@@ -66,8 +66,8 @@ body {
 .qChoice:hover {
   color: red;
   background: rgba(255, 255, 255, 0.4);
-  /* cursor: pointer; */
-  cursor: url(../images/cursor/lolhover.png), auto;
+  cursor: pointer;
+  /* cursor: url(../images/cursor/lolhover.png), auto; */
 }
 /* style needs rework (╯°□°）╯  */
 .scoreCard {

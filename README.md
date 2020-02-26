@@ -1,2 +1,3 @@
 # triviaGame
-hw5
+
+a simple LoL trivia game

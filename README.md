@@ -10,3 +10,5 @@ No keyboard controls, sorry.
 JavaScript should be enabled in browser
 
 Built just with vanilla HTML, CSS and GitHub Pages.
+
+[link here](https://lucodyne.github.io/triviaGame/)
